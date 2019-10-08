@@ -209,8 +209,17 @@ def get(request):
     """Gets the running pipeline's data from the passed request."""
     strategy = social_django.utils.load_strategy(request)
     token = strategy.session_get('partial_pipeline_token')
+
+    if not token:
+        strategy.session_set('partial_pipeline_token', strategy.session_get('partial_pipeline_token_'))
+        token = strategy.session_get('partial_pipeline_token')
+
     partial_object = strategy.partial_load(token)
     pipeline_data = None
+
+    if token and not partial_object:
+        partial_object = strategy.session_get('partial_data')
+
     if partial_object:
         pipeline_data = {'kwargs': partial_object.kwargs, 'backend': partial_object.backend}
     return pipeline_data
@@ -559,6 +568,10 @@ def ensure_user_information(strategy, auth_entry, backend=None, user=None, socia
         saml_providers_list = list(provider.Registry.get_enabled_by_backend_name('tpa-saml'))
         return (current_provider and
                 current_provider.slug in [saml_provider.slug for saml_provider in saml_providers_list])
+
+    if current_partial:
+        strategy.session_set('partial_pipeline_token_', current_partial.token)
+        strategy.session_set('partial_data', current_partial)
 
     if not user:
         # Use only email for user existence check in case of saml provider
