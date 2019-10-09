@@ -216,10 +216,6 @@ def get(request):
 
     partial_object = strategy.partial_load(token)
     pipeline_data = None
-
-    if token and not partial_object:
-        partial_object = strategy.session_get('partial_data')
-
     if partial_object:
         pipeline_data = {'kwargs': partial_object.kwargs, 'backend': partial_object.backend}
     return pipeline_data
@@ -571,7 +567,7 @@ def ensure_user_information(strategy, auth_entry, backend=None, user=None, socia
 
     if current_partial:
         strategy.session_set('partial_pipeline_token_', current_partial.token)
-        strategy.session_set('partial_data', current_partial)
+        strategy.storage.partial.store(current_partial)
 
     if not user:
         # Use only email for user existence check in case of saml provider
