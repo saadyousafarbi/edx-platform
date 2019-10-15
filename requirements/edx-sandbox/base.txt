@@ -29,8 +29,8 @@ pytz==2019.3              # via matplotlib
 scipy==0.14.0
 singledispatch==3.4.0.3
 six==1.12.0
-subprocess32==3.5.4       # via matplotlib
-sympy==0.7.1
+subprocess32==3.5.4 ; python_version == "2.7"  # via matplotlib
+sympy==0.7.2
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools==41.4.0        # via kiwisolver
