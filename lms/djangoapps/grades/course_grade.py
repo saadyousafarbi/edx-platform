@@ -3,6 +3,7 @@ CourseGrade Class
 """
 from __future__ import absolute_import
 
+import math
 from abc import abstractmethod
 from collections import OrderedDict, defaultdict
 
@@ -296,7 +297,8 @@ class CourseGrade(CourseGradeBase):
         Computes and returns the grade percentage from the given
         result from the grader.
         """
-        return round(grader_result['percent'] * 100 + 0.05) / 100
+        # Round grades away from zero.
+        return math.floor(grader_result['percent'] * 100 + 0.05) / 100
 
     @staticmethod
     def _compute_letter_grade(grade_cutoffs, percent):
