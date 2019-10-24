@@ -13,6 +13,7 @@ from django.conf import settings
 from django.utils.encoding import python_2_unicode_compatible
 from lazy import lazy
 
+from openedx.core.lib.grade_utils import round_away_from_zero
 from xmodule import block_metadata_utils
 
 from .config import assume_zero_if_absent
@@ -297,8 +298,7 @@ class CourseGrade(CourseGradeBase):
         Computes and returns the grade percentage from the given
         result from the grader.
         """
-        # Round grades away from zero.
-        return math.floor(grader_result['percent'] * 100 + 0.05) / 100
+        return round_away_from_zero(grader_result['percent'] * 100 + 0.05) / 100
 
     @staticmethod
     def _compute_letter_grade(grade_cutoffs, percent):
