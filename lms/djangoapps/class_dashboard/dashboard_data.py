@@ -353,7 +353,7 @@ def get_d3_section_grade_distrib(course_id, section):
             for (grade, count_grade) in grade_distrib[problem]['grade_distrib']:
                 percent = 0.0
                 if max_grade > 0:
-                    percent = round_away_form_zero((grade * 100.0) / max_grade, 1)
+                    percent = round_away_from_zero((grade * 100.0) / max_grade, 1)
 
                 # Construct tooltip for problem in grade distibution view
                 tooltip = {
@@ -536,7 +536,7 @@ def get_students_problem_grades(request, csv=False):
         for student in students:
             percent = 0
             if student['max_grade'] > 0:
-                percent = round_away_from_zero(decimal.Decimal(student['grade'] * 100 / student['max_grade']), 1)
+                percent = round_away_from_zero((student['grade'] * 100 / student['max_grade']), 1)
             results.append([student['student__profile__name'], student['student__username'], student['grade'], percent])
 
         response = create_csv_response(filename, header, results)
