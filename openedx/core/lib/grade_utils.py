@@ -44,6 +44,7 @@ def is_score_higher_or_equal(earned1, possible1, earned2, possible2, treat_undef
     is_higher_or_equal, _, _ = compare_scores(earned1, possible1, earned2, possible2, treat_undefined_as_zero)
     return is_higher_or_equal
 
+
 def round_away_from_zero(number, digits=0):
     """
     Round numbers using the 'away from zero' strategy as opposed to the
