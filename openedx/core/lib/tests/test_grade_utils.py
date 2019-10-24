@@ -7,7 +7,7 @@ from unittest import TestCase
 
 import ddt
 
-from ..grade_utils import compare_scores
+from ..grade_utils import compare_scores, round_away_from_zero
 
 
 @ddt.ddt
@@ -45,3 +45,8 @@ class TestGradeUtils(TestCase):
         assert is_higher is True
         assert 0 == percentage_1
         assert 0 == percentage_2
+
+    def test_round_away_from_zero(self):
+        assert round_away_from_zero(0.5) == 1
+        assert round_away_from_zero(1.45, 1) == 1.5
+        assert round_away_from_zero(-0.5) == -1

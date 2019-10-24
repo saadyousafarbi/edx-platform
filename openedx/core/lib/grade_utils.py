@@ -1,6 +1,7 @@
 """
 Helpers functions for grades and scores.
 """
+import math
 
 
 def compare_scores(earned1, possible1, earned2, possible2, treat_undefined_as_zero=False):
@@ -42,3 +43,20 @@ def is_score_higher_or_equal(earned1, possible1, earned2, possible2, treat_undef
     """
     is_higher_or_equal, _, _ = compare_scores(earned1, possible1, earned2, possible2, treat_undefined_as_zero)
     return is_higher_or_equal
+
+def round_away_from_zero(number, digits=0):
+    """
+    Round numbers using the 'away from zero' strategy as opposed to the
+    'Banker's rounding strategy.'  In python 2 this is how round used to
+    work but python 3 uses Banker's roundig as the implementation of round.
+
+    We want to continue to round away from zero so that student grades remain
+    consistent and don't suddenly change.
+    """
+
+    p = 10 ** digits
+
+    if number > 0:
+        return float(math.floor((number * p) + 0.5)) / p
+    else:
+        return float(math.ceil((number * p) - 0.5)) / p
