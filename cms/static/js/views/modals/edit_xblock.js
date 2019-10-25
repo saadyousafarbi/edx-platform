@@ -91,8 +91,8 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
                     // Update the custom editor's title
                     editorView.$('.component-name').text(title);
                 } else {
-                    this.createTitleEditor(title);
                     if (editorView.getDataEditor() && editorView.getMetadataEditor()) {
+                        this.createTitleEditor(title);
                         this.addDefaultModes();
                         // If the plugins content element exists, add a button to reveal it.
                         if (this.$('.wrapper-comp-plugins').length > 0) {
