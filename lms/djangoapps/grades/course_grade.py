@@ -3,7 +3,6 @@ CourseGrade Class
 """
 from __future__ import absolute_import
 
-import math
 from abc import abstractmethod
 from collections import OrderedDict, defaultdict
 
