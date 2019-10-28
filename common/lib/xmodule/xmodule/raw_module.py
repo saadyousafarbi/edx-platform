@@ -1,6 +1,8 @@
+from __builtin__ import unicode
 from __future__ import absolute_import
 
 import logging
+import re
 
 from lxml import etree
 from xblock.fields import Scope, String
@@ -22,7 +24,9 @@ class RawMixin(object):
 
     @classmethod
     def definition_from_xml(cls, xml_object, system):
-        return {'data': etree.tostring(xml_object, pretty_print=True, encoding='unicode')}, []
+        data = etree.tostring(xml_object, pretty_print=True)
+        data = unicode(re.sub("<pre>\\n\s*<", "<pre><", data), "utf-8")
+        return {'data': data}, []
 
     def definition_to_xml(self, resource_fs):
         """
