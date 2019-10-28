@@ -24,8 +24,9 @@ class RawMixin(object):
 
     @classmethod
     def definition_from_xml(cls, xml_object, system):
-        data = etree.tostring(xml_object, pretty_print=True)
-        data = unicode(re.sub("<pre>\\n\s*<", "<pre><", data), "utf-8")
+        pre_tag_data = etree.tostring(xml_object.find('pre'))
+        data = etree.tostring(xml_object, pretty_print=True, encoding='unicode')
+        data = re.sub("<pre>[\s\S]*</pre>", pre_tag_data, data)
         return {'data': data}, []
 
     def definition_to_xml(self, resource_fs):
