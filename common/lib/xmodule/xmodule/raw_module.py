@@ -1,4 +1,3 @@
-from __builtin__ import unicode
 from __future__ import absolute_import
 
 import logging
@@ -28,7 +27,7 @@ class RawMixin(object):
         data = etree.tostring(xml_object, pretty_print=True, encoding='unicode')
         if pre_tag_data:
             for index, pre_tag in enumerate(re.findall("<pre>[\s\S]*?</pre>", data)):
-                data = re.sub(pre_tag, pre_tag_data[index], data)
+                data = re.sub(re.escape(pre_tag), pre_tag_data[index], data)
         return {'data': data}, []
 
     def definition_to_xml(self, resource_fs):
